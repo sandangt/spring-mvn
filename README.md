@@ -9,4 +9,3 @@ SPRING PROJECT TEMPLATE WITH MAVEN
 
 # REFERENCE
 - Based on amigoscode's microservices and distributed systems course
-- 
