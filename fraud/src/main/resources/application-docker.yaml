@@ -6,7 +6,7 @@ spring:
   datasource:
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
-    url: jdbc:postgresql://${POSTGRES_HOST_LOCAL}:${POSTGRES_PORT}/fraud
+    url: jdbc:postgresql://${POSTGRES_HOST_DOCKER}:${POSTGRES_PORT}/fraud
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -18,10 +18,10 @@ spring:
   profiles:
     active: default
   zipkin:
-    baseUrl: http://${ZIPKIN_HOST_LOCAL}:${ZIPKIN_PORT}
+    baseUrl: http://${ZIPKIN_HOST_DOCKER}:${ZIPKIN_PORT}
 eureka:
   client:
     service-url:
-      defaultZone: http://${EUREKA_SERVER_HOST_LOCAL}:${EUREKA_SERVER_PORT}/eureka
+      defaultZone: http://${EUREKA_SERVER_HOST_DOCKER}:${EUREKA_SERVER_PORT}/eureka
     fetch-registry: true
     register-with-eureka: true

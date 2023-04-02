@@ -6,7 +6,7 @@ spring:
   datasource:
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
-    url: jdbc:postgresql://${POSTGRES_HOST_LOCAL}:${POSTGRES_PORT}/notification
+    url: jdbc:postgresql://${POSTGRES_HOST_DOCKER}:${POSTGRES_PORT}/notification
   jpa:
     hibernate:
       ddl-auto:  create-drop
@@ -18,13 +18,13 @@ spring:
   profiles:
     active: default
   zipkin:
-    baseUrl: http://${ZIPKIN_HOST_LOCAL}:${ZIPKIN_PORT}
+    baseUrl: http://${ZIPKIN_HOST_DOCKER}:${ZIPKIN_PORT}
   rabbitmq:
-    addresses: amqp://${RABBITMQ_HOST_LOCAL}:${RABBITMQ_PORT}
+    addresses: amqp://${RABBITMQ_HOST_DOCKER}:${RABBITMQ_PORT}
 eureka:
   client:
     service-url:
-      defaultZone: http://${EUREKA_SERVER_HOST_LOCAL}:${EUREKA_SERVER_PORT}/eureka
+      defaultZone: http://${EUREKA_SERVER_HOST_DOCKER}:${EUREKA_SERVER_PORT}/eureka
 rabbitmq:
   exchanges:
     internal: internal.exchange

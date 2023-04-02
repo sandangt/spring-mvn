@@ -1,0 +1,36 @@
+services:
+  postgres:
+    container_name: tutor-ms-postgres
+    image: postgres:15.2
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: /data/postgres
+    volumes:
+      - postgres-data:/data/postgres
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+  zipkin:
+    image: openzipkin/zipkin:2
+    container_name: tutor-ms-zipkin
+    ports:
+      - "${ZIPKIN_PORT}:9411"
+    networks:
+      - spring
+  rabbitmq:
+    image: rabbitmq:3.9.29-management-alpine
+    container_name: tutor-ms-rabbitmq
+    ports:
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQ_UI_PORT}:15672"
+    networks:
+      - spring
+networks:
+  postgres:
+  spring:
+
+volumes:
+  postgres-data:

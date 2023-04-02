@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>amigos</groupId>
+  <groupId>sandangt</groupId>
   <artifactId>tutor-ms</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
@@ -24,6 +24,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring.boot.version>2.5.14</spring.boot.version>
     <spring.cloud.version>2020.0.3</spring.cloud.version>
+    <google.cloud.version>3.1.4</google.cloud.version>
+    <image>sandangt/${project.artifactId}</image>
   </properties>
 
   <dependencyManagement>
@@ -74,6 +76,35 @@
             <execution>
               <goals>
                 <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>com.google.cloud.tools</groupId>
+          <artifactId>jib-maven-plugin</artifactId>
+          <version>${google.cloud.version}</version>
+          <configuration>
+            <from>
+              <image>eclipse-temurin:17</image>
+              <platforms>
+                <platform>
+                  <architecture>amd64</architecture>
+                  <os>linux</os>
+                </platform>
+              </platforms>
+            </from>
+            <to>
+              <tags>
+                <tag>latest</tag>
+              </tags>
+            </to>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>dockerBuild</goal>
               </goals>
             </execution>
           </executions>

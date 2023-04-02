@@ -5,9 +5,9 @@ eureka:
     fetch-registry: false
     register-with-eureka: false
     serviceUrl:
-      defaultZone: http://${EUREKA_SERVER_HOST_LOCAL}:${EUREKA_SERVER_PORT}/eureka
+      defaultZone: http://${EUREKA_SERVER_HOST_DOCKER}:${EUREKA_SERVER_PORT}/eureka
 spring:
   application:
     name: eureka-server
   zipkin:
-    baseUrl: http://${ZIPKIN_HOST_LOCAL}:${ZIPKIN_PORT}
+    baseUrl: http://${ZIPKIN_HOST_DOCKER}:${ZIPKIN_PORT}
