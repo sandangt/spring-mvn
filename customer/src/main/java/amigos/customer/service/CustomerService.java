@@ -1,8 +1,8 @@
 package amigos.customer.service;
 
+import amigos.amqp.RabbitMQMessageProducer;
 import amigos.clients.fraud.FraudCheckResponse;
 import amigos.clients.fraud.FraudClient;
-import amigos.clients.notification.NotificationClient;
 import amigos.clients.notification.NotificationRequest;
 import amigos.customer.model.Customer;
 import amigos.customer.repository.ICustomerRepository;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public record CustomerService(ICustomerRepository customerRepository,
                               FraudClient fraudClient,
-                              NotificationClient notificationClient
+                              RabbitMQMessageProducer producer
 ) {
     public void registerCustomer(CustomerRegistrationRequest customerRequest) {
         Customer customer = Customer.builder()
@@ -26,12 +26,13 @@ public record CustomerService(ICustomerRepository customerRepository,
         if (fraudCheckResponse.isFraudster()) {
             throw new IllegalStateException("Fraudster");
         }
-        notificationClient.sendNotification(
-                new NotificationRequest(
-                        customer.getId(),
-                        customer.getEmail(),
-                        String.format("Hi %s, welcome to amigoscode", customer.getFirstName())
-                )
+        NotificationRequest notificationRequest = new NotificationRequest(
+                customer.getId(),
+                customer.getEmail(),
+                String.format("Hi %s, welcome to amigoscode", customer.getFirstName())
+        );
+        producer.publish(
+            notificationRequest, "internal.exchange", "internal.notification.routing-key"
         );
     }
 }

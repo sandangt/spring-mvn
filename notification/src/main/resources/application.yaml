@@ -19,7 +19,16 @@ spring:
     active: default
   zipkin:
     baseUrl: http://${ZIPKIN_HOST}:${ZIPKIN_PORT}
+  rabbitmq:
+    addresses: amqp://${RABBITMQ_HOST}:${RABBITMQ_PORT}
 eureka:
   client:
     service-url:
       defaultZone: http://${EUREKA_SERVER_HOST}:${EUREKA_SERVER_PORT}/eureka
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key

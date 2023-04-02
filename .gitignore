@@ -29,6 +29,7 @@ hs_err_pid*
 *.iws
 *.iml
 *.ipr
+.attach_pid*
 
 ### STS ###
 .classpath
